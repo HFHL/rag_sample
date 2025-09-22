@@ -1,0 +1,44 @@
+input_dir: data/origin_file
+output_dir: data/chunk
+mineru_input_dir: data/minerU_output
+
+# Chunking parameters
+chunk_size: 800
+chunk_overlap: 200
+min_chunk_chars: 200
+max_chunk_chars: 1200
+
+# Text normalization
+paragraph_separator: "\n\n"
+normalize_whitespace: true
+preserve_line_breaks: true
+language: zh
+
+metadata:
+  include_doc_props: true
+  include_file_times: true
+
+# Embedding configuration
+embedding:
+  model_name: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+  use_gpu: true
+  device: auto
+  batch_size: 64
+
+# Chroma configuration
+chroma:
+  persist_dir: data/chroma_db
+  collection_name: schools
+
+server:
+  host: 0.0.0.0
+  port: 8000
+  temperature: 1
+  templates_dir: server/templates
+  static_dir: server/static
+  prompt_path: prompts/answer_prompt.txt
+
+retrieval:
+  faiss_top_k: 10
+  keyword_top_k: 10
+  tfidf_max_features: 50000
